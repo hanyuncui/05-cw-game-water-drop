@@ -1,145 +1,186 @@
-/* Charity: water Brand Colors & Fonts
-
-Primary Colors:
-- Yellow:     #FFC907
-- Blue:       #2E9DF7
-
-Secondary Colors:
-- Light Blue: #8BD1CB
-- Green:      #4FCB53
-- Orange:     #FF902A
-- Red:        #F5402C
-- Dark Green: #159A48
-- Pink:       #F16061
-
-Fonts:
-- Proxima Nova
-- Avenir
-
-*/
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+  --yellow: #ffc907;
+  --blue: #2e9df7;
+  --gray: #e6f7ff;
+  --bad: #a0a0a0;
+  --text-dark: #222;
+  --text-light: #555;
+  --font: "Avenir Next", "Proxima Nova", "Helvetica Neue", Arial, sans-serif;
 }
 
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fafafa;
+  font-family: var(--font);
+  color: var(--text-dark);
 }
 
 .game-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  width: 100%;
+  max-width: 900px;
 }
+
+.logo { width: 90px; margin-bottom: 8px; }
+
+.game-title { font-size: 44px; font-weight: 700; margin-bottom: 4px; }
+.game-tagline { font-size: 18px; color: var(--text-light); margin-bottom: 12px; }
 
 .score-panel {
-    display: flex;
-    justify-content: space-between;  /* Space between score and button */
-    align-items: center;
-    width: 800px;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex; justify-content: space-between; align-items: center;
+  width: 800px; padding: 12px 24px;
+  background-color: #fff; border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+  font-size: 20px; font-weight: 600;
 }
-
-.timer {
-    flex: 0 1 auto;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-#game-container {
-    width: 800px;
-    height: 600px;
-    background-color: #e6f7ff;
-    border: 2px solid #333;
-    border-radius: 8px;
-    position: relative;
-    overflow: hidden;
-}
-
 
 #start-btn {
-    padding: 8px 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
+  padding: 10px 20px;
+  background-color: var(--yellow);
+  border: none; border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700; cursor: pointer;
 }
 
-#start-btn:hover {
-    background-color: #45a049;
+#start-btn:hover { background-color: #ffdf4d; transform: translateY(-1px); }
+
+#reset-btn-main {
+  padding: 10px 20px;
+  margin-left: 10px;
+  background-color: #ddd;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-.score {
-    flex: 0 1 auto;  /* Don't grow, can shrink, auto basis */
-    font-size: 24px;
-    font-weight: bold;
+#reset-btn-main:hover {
+  background-color: #ccc;
+  transform: translateY(-1px);
 }
 
+
+#game-container {
+  width: 800px; height: 600px;
+  background: linear-gradient(180deg, #b8e6ff 0%, #a3d6f7 100%);
+  border: 2px solid #000; border-radius: 10px;
+  position: relative; overflow: hidden; margin-top: 4px;
+}
+
+/* 雨滴形状 */
 .water-drop {
-    position: absolute;
-    width: 60px;  /* increased from 40px */
-    height: 60px; /* increased from 40px */
-    background-color: #0099ff;
-    border-radius: 50%;
-    animation: dropFall linear forwards;
-    transform-origin: center;
-    cursor: pointer;
-    padding: 15px;  /* Add padding for larger click area */
-    margin: -15px;  /* Offset padding to maintain visual size */
-    transition: transform 0.1s ease;  /* Smooth hover effect */
+  position: absolute; width: 60px; height: 60px;
+  animation: dropFall linear forwards; cursor: pointer;
 }
 
-.water-drop:hover {
-    transform: scale(1.1);  /* Slight grow effect on hover */
+.water-drop::before {
+  content: ""; display: block; width: 100%; height: 100%;
+  border-radius: 0 50% 50% 50%; transform: rotate(45deg);
+  background: radial-gradient(circle at 35% 30%, #ffffff88 0%, #ffffff22 35%, transparent 60%),
+              linear-gradient(160deg, #5eb8ff, #2e9df7);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
-.bad-drop {
-    background-color: #ff4444;
+.bad-drop::before {
+  background: radial-gradient(circle at 35% 30%, #ffffff44 0%, #ffffff22 35%, transparent 60%),
+              linear-gradient(160deg, #bdbdbd, #808080);
 }
 
-.game-title {
-    color: #131313;
-    font-size: 48px;
-    margin-top: 0;
-    margin-bottom: 5px;  /* reduced from 20px */
-    text-align: center;
+/* ⚡ Thunder symbol */
+/* ⚡ Thunder symbol */
+/* ⚡ Thunder symbol (更宽、更自然比例) */
+.thunder {
+  position: absolute;
+  width: 90px;           /* 点击区域更宽 */
+  height: 120px;
+  z-index: 10;
+  cursor: pointer;
+  animation: dropFall linear forwards;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.game-tagline {
-    color: #666;
-    font-size: 18px;
-    margin-bottom: 20px;
-    text-align: center;
+/* 内部闪电造型 */
+.thunder::before {
+  content: "";
+  display: block;
+  width: 45px;           /* ⚡闪电主体更宽 */
+  height: 110px;
+  background: linear-gradient(180deg, #fff900 0%, #ffae00 100%);
+  clip-path: polygon(45% 0, 65% 0, 50% 45%, 80% 45%, 30% 100%, 50% 55%, 20% 55%);
+  filter: drop-shadow(0 0 10px #ffe24a);
+  border-radius: 3px;
+  pointer-events: none;  /* 不阻挡点击 */
+  transform: none;
 }
 
+/* 悬停时更亮 */
+.thunder:hover::before {
+  filter: drop-shadow(0 0 20px #fff26d);
+  transform: scale(1.08);
+  transition: 0.1s ease;
+}
+
+
+
+/* 下落动画 */
 @keyframes dropFall {
-    from {
-        transform: translateY(-20px);
-    }
-    to {
-        transform: translateY(600px);
-    }
+  from { transform: translateY(-60px); }
+  to { transform: translateY(640px); }
 }
 
-@media (max-width: 850px) {
-    .game-wrapper, .score-panel, #game-container {
-        width: 95vw;
-    }
-    
-    #game-container {
-        height: 70vh;
-    }
+/* 屏幕闪光效果 */
+.flash-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  animation: flashScreen 0.3s ease;
 }
+
+@keyframes flashScreen {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* 结束提示 */
+.end-message {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.msg-box {
+  background: #fff; border: 3px solid var(--yellow);
+  border-radius: 14px; padding: 40px 50px;
+  text-align: center; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.msg-box h2 { font-size: 28px; color: var(--blue); margin-bottom: 12px; }
+.msg-box p { color: var(--text-dark); margin-bottom: 20px; font-size: 18px; }
+
+#reset-btn {
+  padding: 10px 20px; background-color: var(--yellow);
+  border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
+}
+#reset-btn:hover { background-color: #ffdf4d; transform: translateY(-1px); }
