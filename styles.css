@@ -20,14 +20,69 @@ body {
   color: var(--text-dark);
 }
 
+/* 新增/替换：品牌行 & 响应性布局 */
+.brand-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;      /* 居中内容 */
+  gap: 16px;                    /* 稍微增大间距，保证大图标有呼吸感 */
+  padding: 14px 20px;           /* 增加内边距，让文字呈标题级可视性 */
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+  box-shadow: 0 8px 22px rgba(46, 157, 247, 0.06);
+  border: 1px solid rgba(0,0,0,0.06);
+  align-self: center;           /* 改为居中 */
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  padding-right: 6px;
+}
+
+/* 统一 logo 大小与垂直对齐（放大） */
+.brand-row .logo {
+  width: 80px;                  /* 放大到 80px，视觉更突出 */
+  height: auto;
+  display: block;
+  object-fit: contain;
+  margin: 0;
+  transform-origin: center;
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+/* 悬停时微放大并加亮（保留） */
+.brand-row .logo:hover { transform: translateY(-2px) scale(1.03); filter: drop-shadow(0 8px 24px rgba(46,157,247,0.12)); }
+
+/* 可见品牌文字，突出 charity: water 名称（标题风格） */
+.brand-name {
+  color: var(--blue);
+  font-weight: 900;
+  font-size: 22px;            /* 标题级字号 */
+  letter-spacing: 0.6px;
+  text-decoration: none;
+  line-height: 1;
+  padding-left: 6px;
+  text-transform: none;
+  display: inline-block;
+}
+
+/* 鼠标悬停在文字上有轻微下划线/颜色加深反馈 */
+.brand-name:hover {
+  color: #1278c9;
+  text-decoration: underline;
+}
+
 .game-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 18px;
   text-align: center;
   width: 100%;
   max-width: 900px;
+  padding: 18px;
 }
 
 .logo { width: 90px; margin-bottom: 8px; }
@@ -37,7 +92,9 @@ body {
 
 .score-panel {
   display: flex; justify-content: space-between; align-items: center;
-  width: 800px; padding: 12px 24px;
+  width: min(800px, 96%);
+  padding: 12px 20px;
+  gap: 12px;
   background-color: #fff; border-radius: 12px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
   font-size: 20px; font-weight: 600;
@@ -74,7 +131,8 @@ body {
 
 
 #game-container {
-  width: 800px; height: 600px;
+  width: min(800px, 96%);
+  height: min(600px, 70vh);
   background: linear-gradient(180deg, #b8e6ff 0%, #a3d6f7 100%);
   border: 2px solid #000; border-radius: 10px;
   position: relative; overflow: hidden; margin-top: 4px;
@@ -184,3 +242,25 @@ body {
   border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
 }
 #reset-btn:hover { background-color: #ffdf4d; transform: translateY(-1px); }
+
+/* 小屏幕适配：减少 logo 与文字尺寸，仍保持居中 */
+@media (max-width: 520px) {
+  .brand-row {
+    gap: 8px;
+    padding: 8px 12px;
+  }
+  .brand-row .logo { width: 56px; }  /* 移动端适当缩小 */
+  .brand-name { font-size: 16px; font-weight: 800; } /* 保持标题感但适配屏宽 */
+}
+
+/* 极窄屏保持垂直堆叠但居中 */
+@media (max-width: 360px) {
+  .brand-row {
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    padding: 6px;
+  }
+  .brand-row .logo { width: 48px; }
+  .brand-name { font-size: 14px; font-weight: 800; }
+}
